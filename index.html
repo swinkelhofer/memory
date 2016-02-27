@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+</script>
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+<style>
+	div {
+		margin: 0px;
+		padding: 0px;
+	}
+	#memory {
+		font-family: 'Lato';
+		color: #22313f;
+		perspective: 1500px;
+	}
+	#memory #memory-settings {
+		padding: 5px;
+		border: 1px solid #22313f;
+		margin: 5px;
+		display: inline-block;
+		margin-bottom: 20px;
+	}
+	#memory .card {
+		transform-style: preserve-3d;
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		transition: 0.6s;
+		margin: 5px;
+		position: relative;
+		border: 1px solid grey;
+	}
+	#memory .card.toggle {
+		transform: rotateY(180deg);
+	}
+	#memory .card .back {
+		backface-visibility: hidden;
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 25px;
+		line-height: 50px;
+		width: 50px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 2.2em;
+		color: #e4f1fe;
+		background-color: #22313f;
+	}
+	#memory .card .front {
+		background-color: #34495e;
+		color: #e4f1fe;
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 25px;
+		height: 50px;
+		width: 50px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 2.2em;
+
+		transform: rotateY(0deg);
+	}
+	#memory .card .back {
+		transform: rotateY(0deg);
+	}
+	#memory .card.toggle .back {
+		transform: rotateY(0deg);
+	}
+	#memory .card.success {
+		visibility: hidden;
+	}
+	#memory select, #memory button {
+		padding: 5px;
+		line-height: 15px;
+		height: 30px;
+		width: 100px;
+		margin: 5px;
+		color: #34495e;
+		background-color: #e4f1fe;
+		border: 1px solid #34495e;
+
+	}
+</style>
+<head>
+	<title>	
+		Test
+	</title>
+</head>
+<body>
+<div id="memory">
+	<h1>Memory</h1>
+	<div id='memory-settings'>
+	<select id="x">
+		<option>2</option>
+		<option>4</option>
+		<option selected="true" >6</option>
+		<option>8</option>
+		<option>10</option>
+	</select>
+x
+	<select id="y">
+		<option>2</option>
+		<option>4</option>
+		<option selected="true" >6</option>
+		<option>8</option>
+		<option>10</option>
+	</select>
+Felder
+	<button id="submit">Anwenden</button>
+	</div>
+	<div id="memory-container">
+	</div>
+	<script type="text/javascript">
+	var counter = 0;
+	jQuery('#memory #submit').click(function() {
+		jQuery('#memory #memory-container').empty();
+		counter = 0;
+		var x = parseInt(jQuery('#memory #x option:selected').text());
+		var y = parseInt(jQuery('#memory #y option:selected').text());
+		for(i = 0; i < y; ++i)
+		{
+			jQuery('<div id="row' + i + '"></div>').appendTo(jQuery('#memory #memory-container'));
+			for(j = 0; j < x; ++j)
+			{
+			jQuery('<div id="card' + j + 'x' + i + '" class="card toggle" onClick="toggler(this)"></div>').appendTo(jQuery('#memory #row' + i));
+			}
+		}
+		for(i = 0; i < x*y / 2; ++i)
+		{
+			var fst = Math.floor((Math.random() * x*y));
+			var snd = Math.floor((Math.random() * x*y));
+			while(jQuery('#memory #card' + (fst % x) + 'x' + Math.floor(fst / x)).children().length > 0)
+				fst = (fst+1) % (x*y);
+			jQuery('<div class="front"></div><div class="back">' + i + '</div>').appendTo(jQuery('#memory #card' + (fst % x) + 'x' + Math.floor(fst / x)));
+
+			while(jQuery('#memory #card' + (snd % x) + 'x' + Math.floor(snd / x)).children().length > 0)
+				snd = (snd+1) % (x*y);
+			jQuery('<div class="front"></div><div class="back">' + i + '</div>').appendTo(jQuery('#memory #card' + (snd % x) + 'x' + Math.floor(snd / x)));
+}
+	});
+	function toggler(e)
+	{
+		if(jQuery('.card:not(.toggle)').length == 2)
+			return;
+		e.classList.toggle('toggle');
+		var elems = jQuery('.card:not(.toggle)');
+		if(elems.length == 2)
+		{
+			if(jQuery(elems[0]).text() == jQuery(elems[1]).text())
+			{
+				elems.each(function(i,el) { jQuery(el).toggleClass('success'); });
+				setTimeout(function() {
+					elems.each(function(i,el) { jQuery(el).toggleClass('toggle')});
+				}, 1500);
+			}
+			else
+			{
+				setTimeout(function() {
+					elems.each(function(i,el) { jQuery(el).toggleClass('toggle')});
+				}, 1500);
+			}
+			counter += 1;
+			if(jQuery('.card:not(.success)').length == 0)
+				alert("Won this game with " + counter + " tries");
+		}
+	}
+</script>
+
+</div>
+</body>
+</html>
