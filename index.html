@@ -25,10 +25,15 @@
 		width: 100px;
 		height: 100px;
 		display: inline-block;
-		transition: 0.6s;
+		transition: transform 0.6s;
 		margin: 5px;
 		position: relative;
 		border: 1px solid grey;
+	}
+	#memory .card:hover {
+		width: 106px;
+		height: 106px;
+		margin: 2px;
 	}
 	#memory .card.toggle {
 		transform: rotateY(180deg);
@@ -38,9 +43,10 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		padding: 25px;
+		padding: 25%;
 		line-height: 50px;
-		width: 50px;
+		height: 50%;
+		width: 50%;
 		text-align: center;
 		font-weight: bold;
 		font-size: 2.2em;
@@ -53,9 +59,9 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		padding: 25px;
-		height: 50px;
-		width: 50px;
+		padding: 25%;
+		height: 50%;
+		width: 50%;
 		text-align: center;
 		font-weight: bold;
 		font-size: 2.2em;
