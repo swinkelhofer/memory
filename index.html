@@ -3,7 +3,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
 </script>
 <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <style>
 	div {
 		margin: 0px;
@@ -127,14 +126,6 @@ Felder
 	<div id="searchcontrol"></div>
 	<script type="text/javascript">
 	var counter = 0;
-		google.load("search", "1", {"nocss" : true});
-		function initialize() {
-        		var searchControl = new google.search.SearchControl();
-			searchControl.addSearcher(new google.search.ImageSearch());
-			searchControl.draw(document.getElementById("searchcontrol"));
-			searchControl.execute("VW GTI");
-      		}
-      		google.setOnLoadCallback(initialize);
 	jQuery('#memory #submit').click(function() {
 
 		jQuery('#memory #memory-container').empty();
